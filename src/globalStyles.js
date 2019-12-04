@@ -6,10 +6,15 @@ const GlobalStyles = createGlobalStyle`
 
     body {
         display: flex;
+        flex: 1;
+
+        height: 100vh;
+        margin: 0;
         justify-content: center;
         align-items: center;
 
         font-family: 'Roboto', sans-serif;
+        overflow: hidden;
     }
 `;
 

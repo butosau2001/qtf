@@ -45,7 +45,7 @@ export default function Input(props) {
                 disabled={props.disabled}
                 onFocus={() => handleFocus(true)}
                 onBlur={() => handleFocus(false)}
-                variant="outlined"
+                variant="filled"
                 InputProps={{
                     inputComponent: TextMask,
                     inputProps: { id: "input" + props.id, focused }

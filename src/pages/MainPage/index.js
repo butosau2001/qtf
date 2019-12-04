@@ -5,19 +5,19 @@ import Input from "../../components/Input";
 import { Button } from "@material-ui/core";
 import { Clear } from "@material-ui/icons";
 
-import { Container, Subcontainer } from "./styles";
+import { Container } from "./styles";
+
+import Subcontainer from "../../components/Subcontainer";
 
 export default function MainPage() {
-    const [goal, setGoal] = useState(localStorage.getItem("goal") || -1);
-    console.log(goal);
+    const [goal, setGoal] = useState(
+        parseInt(localStorage.getItem("goal")) || -1
+    );
 
     const [goalText, setGoalText] = useState("");
 
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
-
-    const [showGoal, setShowGoal] = useState(true);
-    const [showDuration, setShowDuration] = useState(true);
 
     useEffect(() => {
         localStorage.setItem("goal", goal);
@@ -76,12 +76,7 @@ export default function MainPage() {
 
     return (
         <Container>
-            <Subcontainer
-                show={showGoal}
-                animate={goal < 0}
-                onAnimationStart={() => setShowGoal(true)}
-                onAnimationEnd={() => setShowGoal(goal < 0)}
-            >
+            <Subcontainer animate={goal < 0}>
                 <h2>Definir Meta</h2>
                 <Input
                     id="goalInput"
@@ -93,43 +88,32 @@ export default function MainPage() {
                     Salvar
                 </Button>
             </Subcontainer>
-            {goal >= 0 && (
-                <>
-                    <Subcontainer
-                        show={showDuration}
-                        animate={goal >= 0}
-                        onAnimationStart={() => setShowDuration(true)}
-                        onAnimationEnd={() => setShowDuration(goal >= 0)}
-                    >
-                        <h2>Registrar Período</h2>
-                        <Input
-                            id="startInput"
-                            label="Início"
-                            value={start}
-                            onChange={text => setStart(text.target.value)}
-                        />
-                        <Input
-                            id="endInput"
-                            label="Fim"
-                            value={end}
-                            onChange={text => setEnd(text.target.value)}
-                        />
-                        <Button
-                            className="submit"
-                            onClick={handleDurationSubmit}
-                        >
-                            Calcular
-                        </Button>
-
-                        <h1>
-                            {goal === "0" ? "Meta Finalizada" : toHour(goal)}
-                            <Button onClick={() => setGoal(-1)}>
-                                <Clear />
-                            </Button>
-                        </h1>
-                    </Subcontainer>
-                </>
-            )}
+            <Subcontainer animate={goal >= 0}>
+                <h2>Registrar Período</h2>
+                <Input
+                    id="startInput"
+                    label="Início"
+                    value={start}
+                    onChange={text => setStart(text.target.value)}
+                />
+                <Input
+                    id="endInput"
+                    label="Fim"
+                    value={end}
+                    onChange={text => setEnd(text.target.value)}
+                />
+                <Button className="submit" onClick={handleDurationSubmit}>
+                    Calcular
+                </Button>
+                <h1>
+                    {goal === 0
+                        ? "Meta Finalizada"
+                        : goal > 0
+                        ? toHour(goal)
+                        : ""}
+                </h1>
+                <Clear className="clearGoal" onClick={() => setGoal(-1)} />
+            </Subcontainer>
         </Container>
     );
 }
