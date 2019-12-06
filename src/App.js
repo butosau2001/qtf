@@ -1,16 +1,15 @@
 import React from "react";
 
-import MainPage from "./pages/MainPage";
-
+import Routes from "./routes";
 import GlobalStyles from "./globalStyles";
 
 function App() {
-    return (
-        <>
-            <GlobalStyles />
-            <MainPage />
-        </>
-    );
+  return (
+    <>
+      <GlobalStyles />
+      <Routes />
+    </>
+  );
 }
 
 export default App;
