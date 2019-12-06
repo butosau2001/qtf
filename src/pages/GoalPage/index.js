@@ -40,6 +40,8 @@ export default function GoalPage({ handlePageChange }) {
   }
 
   function createGoal(time) {
+    console.log(time);
+    console.log(toHour(time));
     var now = new Date();
     const id = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}-${now.getMinutes()}-${Math.random() *
       1284081623}`;
@@ -74,7 +76,7 @@ export default function GoalPage({ handlePageChange }) {
     if (hour.length !== 2 || minute.length !== 2) return -1;
     if (parseInt(hour) < 0 || parseInt(minute) < 0 || parseInt(minute) >= 60)
       return -1;
-    return 60 * 10 * (hour * 60 + minute);
+    return hour * 60 * 60 * 1000 + minute * 60 * 1000;
   }
 
   function submitInterval(start, end) {
@@ -85,22 +87,16 @@ export default function GoalPage({ handlePageChange }) {
       return;
     }
     var aux = goal.remainingTime - (endAux - startAux);
-    if (aux > 0) {
-      setGoal({
-        ...goal,
-        remainingTime: goal.remainingTime - (endAux - startAux)
-      });
-    } else {
-      setGoal({
-        ...goal,
-        remainingTime: 0
-      });
-    }
+    console.log(goal, startAux, start, endAux, end);
+    setGoal({
+      ...goal,
+      remainingTime: Math.max(aux, 0)
+    });
   }
 
   function toHour(miliseconds) {
-    let minutes = Math.floor((miliseconds / (1000 * 60)) % 60);
     let hours = Math.floor(miliseconds / (1000 * 60 * 60));
+    let minutes = Math.floor(miliseconds / (1000 * 60)) % 60;
 
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
