@@ -9,10 +9,8 @@ import { Container } from "./styles";
 
 import Subcontainer from "../../components/Subcontainer";
 
-export default function GoalPage({ handlePageChange }) {
-  const [goalId, setGoalId] = useState(
-    localStorage.getItem("currentGoal") || 0
-  );
+export default function GoalPage({ handlePageChange, currentGoal }) {
+  const [goalId, setGoalId] = useState(currentGoal);
 
   const [goal, setGoal] = useState(null);
   const [goalText, setGoalText] = useState("");
@@ -40,8 +38,6 @@ export default function GoalPage({ handlePageChange }) {
   }
 
   function createGoal(time) {
-    console.log(time);
-    console.log(toHour(time));
     var now = new Date();
     const id = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}-${now.getMinutes()}-${Math.random() *
       1284081623}`;
@@ -87,7 +83,6 @@ export default function GoalPage({ handlePageChange }) {
       return;
     }
     var aux = goal.remainingTime - (endAux - startAux);
-    console.log(goal, startAux, start, endAux, end);
     setGoal({
       ...goal,
       remainingTime: Math.max(aux, 0)

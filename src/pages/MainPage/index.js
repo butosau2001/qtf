@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Container } from "./styles";
 
-export default function MainPage({ handlePageChange }) {
+import GoalContainer from "../../components/GoalContainer";
+import Header from "../../components/Header";
+
+export default function MainPage({ handlePageChange, setCurrentGoal }) {
+  const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    setGoals(JSON.parse(localStorage.getItem("goals")) || []);
+  }, []);
+
+  console.log(goals);
   return (
     <Container>
-      <div onClick={() => handlePageChange("/goal")}>Go</div>
+      <Header />
+      <div className="goals">
+        {goals.map(e => (
+          <GoalContainer
+            key={e.id}
+            goal={e}
+            handlePageChange={handlePageChange}
+            setCurrentGoal={setCurrentGoal}
+          />
+        ))}
+      </div>
     </Container>
   );
 }

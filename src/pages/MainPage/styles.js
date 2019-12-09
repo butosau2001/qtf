@@ -1,19 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    display: flex;
-    flex: 1;
+  display: flex;
+  flex: 1;
 
-    flex-direction: column;
+  flex-direction: column;
+  overflow: auto !important;
 
-    align-items: center;
-    justify-content: center;
+  width: 100vw;
 
-    .clearGoal {
-        cursor: pointer;
-        position: absolute;
-        bottom: 0.5rem;
-        right: 0.5rem;
-        font-size: 1.5rem;
-    }
+  .goals {
+    margin-top: 10vh;
+  }
 `;
